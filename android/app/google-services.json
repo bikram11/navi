@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "520560824318",
+    "project_id": "pmsapp-49a4f",
+    "storage_bucket": "pmsapp-49a4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520560824318:android:2f4b79f9d5de3a22dcfaaf",
+        "android_client_info": {
+          "package_name": "com.PMS.alpha1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520560824318-2lghvdb33akl2a0pguoe06g8ejsv2f39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCifW7jUVGEtKp4ro4rSyse03VeWy_iFII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520560824318-2lghvdb33akl2a0pguoe06g8ejsv2f39.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
