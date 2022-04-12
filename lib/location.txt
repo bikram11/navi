@@ -1,12 +1,4 @@
-import 'dart:convert';
-
-import 'package:firebase_database/firebase_database.dart';
-import 'package:navi/masonLoca.dart';
-import 'incident.dart';
-
-
-final database_ref = FirebaseDatabase.instance.reference();
-List<List> loca = [["Aquatic and Fitness Center",38.8264251,-77.3064282],
+[["Aquatic and Fitness Center",38.8264251,-77.3064282],
 ["Aquia Building",38.8320725,-77.3116064],
 ["Art and Design Building",38.827989,-77.3085147],
 ["Buchanan Hall",38.8288041,-77.3107454],
@@ -58,58 +50,4 @@ List<List> loca = [["Aquatic and Fitness Center",38.8264251,-77.3064282],
 ["Student Union Building I",38.8316214,-77.3109749],
 ["The Hub",38.8308204,-77.3075497],
 ["Thompson Hall",38.8327503,-77.3121053],
-["West Building",38.8325012,-77.311329]];
-
-DatabaseReference saveIncident(Incident incident){
-  var id = database_ref.child('incidents/').push();
-  id.set(incident.toJson());
-  return id;
-}
-
-Future<List<Incident>> getallIncidents() async{
-  DatabaseEvent dataSnapshot = await database_ref.child('incidents/').once();
- 
-  List<Incident> incidents = [];
-  if(dataSnapshot.snapshot.value != null){
-    Map<dynamic,dynamic> values= dataSnapshot.snapshot.value as Map;
-    values.forEach((key,value){
-      Incident incident = createIncident(value);
-      incident.setId(database_ref.child('incidents/'+key));
-      incidents.add(incident);
-    });
-  }
-  
-  
-  return incidents;
-}
-
-
-DatabaseReference saveMasonLoca(MasonLoca masonLoca){
-  var id = database_ref.child('locations/').push();
-  id.set(masonLoca.toJson());
-  return id;
-}
-
-Future<List<MasonLoca>> getallMasonLoca() async{
-  DatabaseEvent dataSnapshot = await database_ref.child('locations/').once();
- 
-  List<MasonLoca> locations = [];
-  if(dataSnapshot.snapshot.value != null){
-    Map<dynamic,dynamic> values= dataSnapshot.snapshot.value as Map;
-    values.forEach((key,value){
-      MasonLoca masonLoca = createMasonLoca(value);
-      masonLoca.setId(database_ref.child('locations/'+key));
-      locations.add(masonLoca);
-    });
-  }else{
-    loca.forEach((element){
-
-      var tempLoca = new MasonLoca(element[0],element[1],element[2]);
-      tempLoca.setId(saveMasonLoca(tempLoca));
-      locations.add(tempLoca);
-    });
-  }
-  
-  
-  return locations;
-}
+["West Building",38.8325012,-77.311329]]

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:navi/uploadImage.dart';
 
+import 'database.dart';
+import 'masonLoca.dart';
+
 class IncidentSelect extends StatefulWidget {
   final String classChoice;
   const IncidentSelect(this.classChoice, { Key? key }) : super(key: key);
@@ -10,32 +13,32 @@ class IncidentSelect extends StatefulWidget {
 }
 
 class _IncidentSelect extends State<IncidentSelect> {
-  String dropDownvalue1 = "Johnson Center";
-  String dropDownvalue2 = "SUB-1";
+  String dropDownvalue1 = "Nguyen Engineering Building";
+  String dropDownvalue2 = "Music/Theater Building";
+ List<MasonLoca> locations = [];
+ List<MasonLoca> tempLocations = [];
 
-  var buildings = [
-    'Johnson Center',
-    'Horizon Hall',
-    'SUB-1',
-    'Enterprise Building'
-  ];
-  var tempBuildings =  [
-    'Johnson Center',
-    'Horizon Hall',
-    'SUB-1',
-    'Enterprise Building'
-  ];
+  Future<void> updateLocations()async {
+    getallMasonLoca().then((locations)=>{
+      this.setState(() {
+        this.locations = locations;
+        this.tempLocations = locations;
+      })
+    });
+  }
+ 
       late String _classed;
 
   @override
   void initState() {
     super.initState();
+    updateLocations();
     _classed = widget.classChoice;
   }
   @override
   Widget build(BuildContext context) {
   return Container(
-      height: 275,
+      height: 300,
               decoration: BoxDecoration(color: Color.fromARGB(178, 0, 102, 51),borderRadius: BorderRadius.circular(15.0),),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -43,66 +46,92 @@ class _IncidentSelect extends State<IncidentSelect> {
           children: [
             Center(child: Text("The obstacle was found connecting", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20),)),
                                             SizedBox(height: 10,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                
-                DecoratedBox(
-                  
-                  decoration: ShapeDecoration(
-                    
-                    color: Colors.white,
-                    shape:RoundedRectangleBorder(side: BorderSide(width:1.0, style: BorderStyle.solid,color: Colors.white),borderRadius: BorderRadius.all(Radius.circular(10)))
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:  18.0),
-                    child: DropdownButton(
-                      value: dropDownvalue1,
-                      style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromARGB(178, 0, 102, 51) ),  
-                      
-                     items: buildings.map((String item)
-                    {
-                      return DropdownMenuItem( child: Text(item),value: item,);
-                    }).toList(), onChanged: (String? newValue){
-                      setState(() {
-                        dropDownvalue1 = newValue!;
-                    
-    
-                      });
-                    }),
-                  ),
-                ),
-                 SizedBox(height: 10,),
+           
+           Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                 children: [
+                 Icon(Icons.zoom_out_map_rounded,color: Colors.white,size: 24,),
+                   Container(
+                     decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
+                     child: Padding(
+                       padding: const EdgeInsets.symmetric(vertical:3.0,horizontal: 8),
+                       child: DropdownButton(
+              
+            // Initial Value
+            dropdownColor: Colors.white,
+            value: dropDownvalue1,
+              
+            // Down Arrow Icon
+            icon: const Icon(Icons.keyboard_arrow_down),    
+            onChanged: (String? newValue) { 
+              setState(() {
+                dropDownvalue1 = newValue!;
+              });
+            },
+            // Array list of items
+            items: locations.map((MasonLoca items) {
+              return DropdownMenuItem(
+                        value: items.locaName.toString(),
+                        child: Text(items.locaName),
+              );
+            }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            
+          ),
+                     ),
+                   ),
+                 ],
+               ),
+              SizedBox(height: 10,),
+            
                  Center(child: Text("and", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),)),
                                             SizedBox(height: 10,),
-                DecoratedBox(
-                  
-                  decoration: ShapeDecoration(
-                    
-                    color: Colors.white,
-                    shape:RoundedRectangleBorder(side: BorderSide(width:1.0, style: BorderStyle.solid,color: Colors.white),borderRadius: BorderRadius.all(Radius.circular(10)))
-                  ),
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:  18.0),
-                    child: DropdownButton(
-                      value: dropDownvalue2,
-                      style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromARGB(178, 0, 102, 51) ),  
-                      
-                     items: buildings.map((String item)
-                    {
-                      return DropdownMenuItem( child: Text(item),value: item,);
-                    }).toList(), onChanged: (String? newValue){
-                      setState(() {
-                        dropDownvalue2 = newValue!;
-                    
-    
-                      });
-                    }),
-                  ),
-                ),
-               
-              ],
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                 children: [
+                 Icon(Icons.zoom_in_map_rounded,color: Colors.white,size: 24,),
+                   Container(
+                     decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
+                     child: Padding(
+                       padding: const EdgeInsets.symmetric(vertical:3.0,horizontal: 8),
+                       child: DropdownButton(
+              
+            // Initial Value
+            dropdownColor: Colors.white,
+            value: dropDownvalue2,
+              
+            // Down Arrow Icon
+            icon: const Icon(Icons.keyboard_arrow_down),    
+            onChanged: (String? newValue) { 
+              setState(() {
+                         dropDownvalue2 = newValue!;
+              });
+            },
+            // Array list of items
+            items: locations.map((MasonLoca items) {
+              return DropdownMenuItem(
+                        value: items.locaName.toString(),
+                        child: Text(items.locaName),
+              );
+            }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            
+          ),
+                     ),
+                   ),
+                 ],
+               ),
+               ],
+              ),
             ),
+          
+           
             Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(

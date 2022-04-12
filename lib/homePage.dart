@@ -11,29 +11,65 @@ import 'package:navi/incidentList.dart';
 // import 'package:flutter_html/flutter_html.dart';
 import 'package:navi/locationForm.dart';
 import 'package:navi/locationFormMultipleSelect.dart';
+import 'package:navi/masonLoca.dart';
+import 'package:navi/sourceLoca.dart';
 class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
+class Stacke<E> {
+  final _list = <E>[];
+
+  void push(E value) => _list.add(value);
+
+  E pop() => _list.removeLast();
+
+  E get peek => _list.last;
+
+  bool get isEmpty => _list.isEmpty;
+  bool get isNotEmpty => _list.isNotEmpty;
+
+  @override
+  String toString() => _list.toString();
+}
+
 
 class _HomePageState extends State<HomePage> {
-  List<Incident> incidents = [];
-
+  final incident = Stacke<Incident>();
+  List<Incident> incidentList = [];
+  List<MasonLoca> locations = [];
   Future<void> updateIncidents()async {
     getallIncidents().then((incidents)=>{
       this.setState(() {
-        this.incidents = incidents;
+        incidentList = incidents;
+//         incidents.forEach((element) {
+//           incident.push(element);
+//         });
+//         while(incident.isNotEmpty){
+//           Incident temp = incident.pop();
+//           if(!incidentList.contains(temp)){
+// incidentList.add(temp);
+//           }
+//         }
       })
     });
   }
 
+  Future<void> updateLocations()async {
+    getallMasonLoca().then((locations)=>{
+      this.setState(() {
+        this.locations = locations;
+      })
+    });
+  }
 
   @override
   void initState(){
     super.initState();
     updateIncidents();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -79,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: RefreshIndicator(
                         onRefresh: updateIncidents,
-                        child: IncidentList(incidents)),
+                        child: IncidentList(incidentList)),
           //             child: Html(
           // data: html,),
                     ),
@@ -93,44 +129,57 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: size.width*0.40,
-                              height: size.height*0.15,
-                              decoration: BoxDecoration(color: Colors.white,
-                              border: Border.all(color: Color.fromARGB(17, 0, 0, 0)),
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.elevator_rounded,color: Color.fromARGB(195, 0, 0, 0),size: 30,),
-                                  Text("Indoor\nNavigation", style: TextStyle(color: Color.fromARGB(195, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 25),textAlign: TextAlign.center,),
-                                ],
+                  GestureDetector(
+                    onTap: () {
+ 
+},
+                    child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: size.width*0.40,
+                                height: size.height*0.15,
+                                decoration: BoxDecoration(color: Colors.white,
+                                border: Border.all(color: Color.fromARGB(17, 0, 0, 0)),
+                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.elevator_rounded,color: Color.fromARGB(195, 0, 0, 0),size: 30,),
+                                    Text("Indoor\nNavigation", style: TextStyle(color: Color.fromARGB(195, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 25),textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              
                               ),
-                            
                             ),
-                          ),
-                                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: size.width*0.40,
-                              height: size.height*0.15,
-                              decoration: BoxDecoration(color: Colors.white,
-                              border: Border.all(color: Color.fromARGB(17, 0, 0, 0)),
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                             child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.map_rounded,color: Color.fromARGB(195, 0, 0, 0),size: 30,),
-                                  Text("Outdoor\nNavigation", style: TextStyle(color: Color.fromARGB(195, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 25),textAlign: TextAlign.center,),
-                                ],
-                              ),
-                            
-                            ),
-                          ),
+                  ),
+                                        GestureDetector(
+                                          onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const SourceLoca()),
+  );
+},
+                                          child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Container(
+                                                                      width: size.width*0.40,
+                                                                      height: size.height*0.15,
+                                                                      decoration: BoxDecoration(color: Colors.white,
+                                                                      border: Border.all(color: Color.fromARGB(17, 0, 0, 0)),
+                                                                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                     child: Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Icon(Icons.map_rounded,color: Color.fromARGB(195, 0, 0, 0),size: 30,),
+                                                                          Text("Outdoor\nNavigation", style: TextStyle(color: Color.fromARGB(195, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 25),textAlign: TextAlign.center,),
+                                                                        ],
+                                                                      ),
+                                                                    
+                                                                    ),
+                                                                  ),
+                                        ),
                 ],
               ),
                                 Padding(
