@@ -72,15 +72,7 @@ class _ImageUploadState extends State<ImageUpload> {
               ),
     ),
             ),
-             Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              
-                              height: 50,
-                              decoration: BoxDecoration(color: Colors.redAccent,
-                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                              child:GestureDetector(
+             GestureDetector(
                                 onTap: (){
                                   newIncident(_classed, _incident);
                                    
@@ -93,11 +85,18 @@ class _ImageUploadState extends State<ImageUpload> {
                                     ),
                                     context: context, builder: (context)=>SubmittedTha());
                                 },
+               child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
                                 
-                                
-                                child: Center(child: Text("Submit", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),))),
+                                height: 50,
+                                decoration: BoxDecoration(color: Colors.redAccent,
+                                border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                                child:Center(child: Text("Submit", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),)),
+                              ),
                             ),
-                          ),
+             ),
           ],
         ),
       )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'incident.dart';
-
+import 'package:flutter_tts/flutter_tts.dart';
 
 class IncidentList extends StatefulWidget {
   final List<Incident> incidentList;
@@ -14,6 +14,16 @@ class IncidentList extends StatefulWidget {
 }
 
 class _IncidentListState extends State<IncidentList> {
+  final FlutterTts flutterTts = FlutterTts();
+    Future _speak(String abc) async {
+
+
+    if (abc != null) {
+      if (abc!.isNotEmpty) {
+        await flutterTts.speak(abc!);
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -23,7 +33,15 @@ class _IncidentListState extends State<IncidentList> {
         return Card(
           child: Row(children: [
             Expanded(child: ListTile(title: Text(incident.type),subtitle: 
-                Text(incident.inc +" at "+ incident.timeStamp),
+                GestureDetector(
+                  onTap: () {
+                    String temp = incident.inc +" at "+ incident.timeStamp;
+
+
+
+                  },
+                  
+                  child: Text(incident.inc +" at "+ incident.timeStamp)),
               
             )),
           ],),

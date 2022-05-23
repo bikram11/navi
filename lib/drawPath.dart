@@ -76,7 +76,7 @@ class _DrawPathState extends State<DrawPath> {
   Widget build(BuildContext context) {
     final List<LatLng> polyPoints = []; // For holding Co-ordinates as LatLng
     final Set<Polyline> polyLines = {}; // For holding instance of Polyline
-    final List<Marker> markers = []; // For holding instance of Marker
+    // For holding instance of Marker
     var data;
     List<dynamic> summary = [];
     
@@ -85,30 +85,47 @@ class _DrawPathState extends State<DrawPath> {
     double startLng = widget.srcLoca.locaLati;
     double endLat = widget.desLoca.locaLong;
     double endLng =widget.desLoca.locaLati;
-    markers.add(
+   Marker marker1=
                       Marker(
-                        width: 150.0,
-                        height: 150.0,
                         point: LatLng(startLat,startLng),
-                        builder: (ctx) => const Icon(
-                          Icons.location_on,
-                          color: Colors.red,
-                          size: 35.0,
+                        builder: (ctx) =>  Container(
+                          width: 20,
+                          height: 20,
+                           decoration: BoxDecoration(color: Colors.white,
+                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5),spreadRadius: 3,blurRadius: 3,offset: Offset(0,3))]),
+                            
+                          child: const Icon(
+                            Icons.wheelchair_pickup,
+                            color: Colors.green,
+                            size: 20.0,
+                          ),
                         ),
-                      ),
-                    );
-                    markers.add(
+                      );
+                    Marker marker2 = 
                       Marker(
-                        width: 150.0,
-                        height: 150.0,
+                      
+                        
                         point: LatLng(endLat,endLng),
-                        builder: (ctx) => const Icon(
-                          Icons.location_on,
-                          color: Colors.green,
-                          size: 35.0,
+                        builder: (ctx) => Container(
+                          width: 20,
+                          height: 20,
+                           decoration: BoxDecoration(color: Colors.white,
+                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5),spreadRadius: 3,blurRadius: 3,offset: Offset(0,3))]),
+                            
+                          child: const Icon(
+                            Icons.pin_drop,
+                            color: Colors.red,
+                            size: 20.0,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                      List<Marker> mark = [];
+                      mark.add(marker1); 
+                      mark.add(marker2);
     var points = <LatLng>[];
 
     var pointsGradient = <LatLng>[
@@ -155,39 +172,94 @@ class _DrawPathState extends State<DrawPath> {
       var size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
            Padding(
              padding: const EdgeInsets.fromLTRB(25.0,0,0,0),
-             child: FloatingActionButton( onPressed: () {
-                // Add your onPressed code here!
-                 showModalBottomSheet(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15.0),
-                                        
-                                      ),
-                                      context: context, builder: (context)=>OwnDirection(summary));
-              },
-              backgroundColor: Colors.green,
-              
-              child: const Icon(Icons.directions,size: 30,)),
+             child: Column(
+               
+               mainAxisAlignment: MainAxisAlignment.end,
+               children: [
+                 FloatingActionButton( onPressed: () {
+                    // Add your onPressed code here!
+                     showModalBottomSheet(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                            
+                                          ),
+                                          context: context, builder: (context)=>Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: OwnDirection(summary),
+                                          ));
+                  },
+                  backgroundColor: Colors.green,
+                  
+                  child: const Icon(Icons.directions,size: 30,)),
+                  Container(
+                             
+                              decoration: BoxDecoration(color: Colors.green,
+                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child:Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 3.0),
+                                child: Center(child: Text("Directions", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),)),
+                              ),
+                            ),
+               ],
+             ),
            ),
-             FloatingActionButton( onPressed: () {
-              // Add your onPressed code here!
+           SizedBox(width: 5,),
+             Column(
+               mainAxisAlignment: MainAxisAlignment.end,
+               children: [
+                 FloatingActionButton( onPressed: () {
+                       showModalBottomSheet(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                            
+                                          ),
+                                          context: context, builder: (context)=>ChoiceRow());
+                  // Add your onPressed code here!
             },
             backgroundColor: Colors.red,
             child: const Icon(Icons.warning,size: 30,)),
-          FloatingActionButton( onPressed: () {
-              // Add your onPressed code here!
-               showModalBottomSheet(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15.0),
-                                        
-                                      ),
-                                      context: context, builder: (context)=>ChoiceRow());
-            },
-            backgroundColor: Colors.blue,
-            child: const Icon(Icons.info,size: 30,)),
+
+
+             Container(
+                             
+                              decoration: BoxDecoration(color: Colors.red,
+                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child:Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 3.0),
+                                child: Center(child: Text("Report an Incident", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),)),
+                              ),
+                            ),
+               ],
+             ),
+               SizedBox(width: 5,),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton( onPressed: () {
+                  // Add your onPressed code here!
+               
+                },
+                backgroundColor: Colors.blue,
+                child: const Icon(Icons.info,size: 30,)),
+                          Container(
+                             
+                              decoration: BoxDecoration(color: Colors.blue,
+                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child:Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 3.0),
+                                child: Center(child: Text("Route Information", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),)),
+                              ),
+                            ),
+            ],
+          ),
+
         ],
       ),
       body: Column(
@@ -212,7 +284,12 @@ class _DrawPathState extends State<DrawPath> {
                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
                      child: Padding(
                        padding: const EdgeInsets.symmetric(vertical:3.0,horizontal: 8),
-                       child: DropdownButton(
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         mainAxisAlignment: MainAxisAlignment.start,
+                         children: [
+                           Text("Source Building",style: TextStyle(color: Color.fromARGB(178, 0, 102, 51),fontWeight: FontWeight.bold),),
+                           DropdownButton(
               
             // Initial Value
             dropdownColor: Colors.white,
@@ -222,28 +299,30 @@ class _DrawPathState extends State<DrawPath> {
             icon: const Icon(Icons.keyboard_arrow_down),    
             onChanged: (String? newValue) { 
               setState(() {
-                        locations.forEach((element) {if(element.locaName==newValue){
-                          setState(() {
-                            Navigator.pop(context);
-                             Navigator.push(
+                            locations.forEach((element) {if(element.locaName==newValue){
+                              setState(() {
+                                Navigator.pop(context);
+                                 Navigator.push(
     context,
     MaterialPageRoute(builder: (context) =>  DrawPath(element,widget.desLoca)),
   );
-                          });
-                        }});
+                              });
+                            }});
               });
             },
             // Array list of items
             items: locations.map((MasonLoca items) {
               return DropdownMenuItem(
-                        value: items.locaName.toString(),
-                        child: Text(items.locaName),
+                            value: items.locaName.toString(),
+                            child: Text(items.locaName),
               );
             }).toList(),
             // After selecting the desired option,it will
             // change button value to selected value
             
           ),
+                         ],
+                       ),
                      ),
                    ),
                  ],
@@ -257,7 +336,12 @@ class _DrawPathState extends State<DrawPath> {
                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
                      child: Padding(
                        padding: const EdgeInsets.symmetric(vertical:3.0,horizontal: 8),
-                       child: DropdownButton(
+                       child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                         mainAxisAlignment: MainAxisAlignment.start,
+                         children: [
+                           Text("Destination Building",style: TextStyle(color: Color.fromARGB(178, 0, 102, 51),fontWeight: FontWeight.bold),),
+                           DropdownButton(
               
             // Initial Value
             dropdownColor: Colors.white,
@@ -267,28 +351,30 @@ class _DrawPathState extends State<DrawPath> {
             icon: const Icon(Icons.keyboard_arrow_down),    
             onChanged: (String? newValue) { 
               setState(() {
-                        locations.forEach((element) {if(element.locaName==newValue){
-                          setState(() {
-                            Navigator.pop(context);
-                             Navigator.push(
+                            locations.forEach((element) {if(element.locaName==newValue){
+                              setState(() {
+                                Navigator.pop(context);
+                                 Navigator.push(
     context,
     MaterialPageRoute(builder: (context) =>  DrawPath(widget.srcLoca,element)),
   );
-                          });
-                        }});
+                              });
+                            }});
               });
             },
             // Array list of items
             items: locations.map((MasonLoca items) {
               return DropdownMenuItem(
-                        value: items.locaName.toString(),
-                        child: Text(items.locaName),
+                            value: items.locaName.toString(),
+                            child: Text(items.locaName),
               );
             }).toList(),
             // After selecting the desired option,it will
             // change button value to selected value
             
           ),
+                         ],
+                       ),
                      ),
                    ),
                  ],
@@ -306,13 +392,7 @@ class _DrawPathState extends State<DrawPath> {
                 zoom: 16.0,
                 
               ),
-              layers: [MarkerLayerOptions(
-              markers: [
-                Marker(width: 80,height: 80, point: markers[0].point, builder:  (context)=>Container(child: Icon(Icons.pin_drop,size: 20,color: Colors.green,),)),
-                Marker(width: 80,height: 80,point: markers[1].point, builder:  (context)=>Container(child: Icon(Icons.pin_drop,size: 20,color: Colors.red,))),
-                
-              ],
-            ),
+              layers: [
                 TileLayerOptions(
                     urlTemplate:
                         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -322,10 +402,13 @@ class _DrawPathState extends State<DrawPath> {
                     Polyline(
                         points: polyPoints,
                         strokeWidth: 4.0,
-                        color: Colors.purple),
+                        color: Color.fromARGB(178, 0, 102, 51)),
                   ],
                   
                 ),
+                MarkerLayerOptions(
+              markers: mark,
+            ),
 
               ],
             ),

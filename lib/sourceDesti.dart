@@ -108,23 +108,22 @@ class _SourceDestiState extends State<SourceDesti> {
                                     child: Center(child: Text("Proceed", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),))),
                                 ),
                               ),
-           Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: size.width*0.80,
-                                  height: size.height*0.05,
-                                  decoration: BoxDecoration(color: Colors.redAccent,
-                                  border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
-                                  borderRadius: BorderRadius.all(Radius.circular(10))),
-                                  child:GestureDetector(
+           GestureDetector(
                                     onTap: (){
                                       updateLocations();
                                     },
-                                    
-                                    
-                                    child: Center(child: Text("Reset Search", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),))),
+             child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: size.width*0.80,
+                                    height: size.height*0.05,
+                                    decoration: BoxDecoration(color: Colors.redAccent,
+                                    border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    child:Center(child: Text("Reset Search", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),)),
+                                  ),
                                 ),
-                              ),
+           ),
                 ],
               ),
                           ),

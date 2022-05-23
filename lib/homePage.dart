@@ -13,6 +13,7 @@ import 'package:navi/locationForm.dart';
 import 'package:navi/locationFormMultipleSelect.dart';
 import 'package:navi/masonLoca.dart';
 import 'package:navi/sourceLoca.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
 
@@ -96,12 +97,21 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: <Widget>[Align(
                     alignment: Alignment.topRight,
-                    child: Container(height: 52,width: 52,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(178, 0, 102, 100),
-                      shape: BoxShape.circle
-                    ),
-                    child: Icon(Icons.vertical_distribute,color: Colors.white,size: 20,),
+                    child: GestureDetector(
+                      onTap: () => launchUrlString("tel://5713407772"),
+                      child: Container(height: 52,width: 52,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        boxShadow: [ BoxShadow(color: Colors.black38,blurRadius: 2,blurStyle: BlurStyle.normal, spreadRadius: 3),],
+                        shape: BoxShape.circle
+                      ),
+                      child: Column(
+                        children: [
+                          Icon(Icons.wb_twilight,color: Colors.white,size: 25,),
+                          Text("SOS",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),)
+                        ],
+                      ),
+                      ),
                     ),
                   ),
                   Text(actualDate, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),),
@@ -122,7 +132,8 @@ class _HomePageState extends State<HomePage> {
                   )],
                 ),
               ),
-            )
+            ),
+            
           ],),
           Column(
             children: [
@@ -182,28 +193,27 @@ class _HomePageState extends State<HomePage> {
                                         ),
                 ],
               ),
-                                Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: size.width*0.80,
-                              height: size.height*0.10,
-                              decoration: BoxDecoration(color: Colors.redAccent,
-                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                              child:GestureDetector(
-                                onTap: (){
-                                  showModalBottomSheet(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      
-                                    ),
-                                    context: context, builder: (context)=>ChoiceRow());
-                                },
-                                
-                                
-                                child: Center(child: Text("Report an Incident", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),))),
-                            ),
-                          ),
+                                GestureDetector(
+                                   onTap: (){
+                                    showModalBottomSheet(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                        
+                                      ),
+                                      context: context, builder: (context)=>ChoiceRow());
+                                  },
+                                  child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Container(
+                                                              width: size.width*0.80,
+                                                              height: size.height*0.10,
+                                                              decoration: BoxDecoration(color: Colors.redAccent,
+                                                              border: Border.all(color: Color.fromARGB(0, 0, 0, 0)),
+                                                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                              child:Center(child: Text("Report an Incident", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),)),
+                                                            ),
+                                                          ),
+                                ),
             ],
           )
         ],
